@@ -8,6 +8,7 @@
     "start": "next start",
     "test": "yarn type-check",
     "type-check": "tsc --noEmit",
+    "contentful:import": "contentful space import --config import/config.json",
     "build:schema": "graphql-codegen --config codegen.yml"
   },
   "prettier": {

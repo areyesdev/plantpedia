@@ -1,5 +1,5 @@
 {
-  "spaceId": "NEXT_PUBLIC_SPACE_ID",
-  "managementToken": "NEXT_PUBLIC_ACCESS_TOKEN",
+  "spaceId": "YOUR_SPACE_ID",
+  "managementToken": "YOUR_MANAGEMENT_TOKEN",
   "contentFile": "import/contentful-platzipedia.json"
 }
