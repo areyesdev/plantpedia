@@ -6,15 +6,16 @@ import { Hero } from '@components/Hero'
 import { PlantCollection } from '@components/PlantCollection'
 import { Authors } from '@components/Authors'
 
-type HomeProps = { plants: Plant[] }
+type HomeProps = {
+  plants: Plant[]
+}
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const plants = await getPlantList({ limit: 10 })
+
   return {
-    props: {
-      plants,
-    },
-    revalidate: 5 * 60, // refresh 5min
+    props: { plants },
+    revalidate: 5 * 60, // once every five minutes
   }
 }
 
@@ -32,6 +33,7 @@ export default function Home({
       />
       <PlantCollection
         plants={plants.length > 8 ? plants.slice(3, 9) : plants}
+        variant="square"
       />
     </Layout>
   )
