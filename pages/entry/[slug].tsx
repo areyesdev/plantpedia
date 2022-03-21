@@ -1,5 +1,6 @@
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
+import { flatMap } from 'lodash'
 
 import { getPlant, getPlantList, getCategoryList } from '@api'
 
@@ -20,6 +21,7 @@ type PlantEntryPageProps = {
 export const getStaticProps: GetStaticProps<PlantEntryPageProps> = async ({
   params,
   preview,
+  locale,
 }) => {
   const slug = params?.slug
 
@@ -30,7 +32,7 @@ export const getStaticProps: GetStaticProps<PlantEntryPageProps> = async ({
   }
 
   try {
-    const plant = await getPlant(slug, preview)
+    const plant = await getPlant(slug, preview, locale)
 
     // Sidebar – This could be a single request since we are using GraphQL :)
     const otherEntries = await getPlantList({
@@ -57,15 +59,24 @@ type PathType = {
   params: {
     slug: string
   }
+  locale: string
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
+  if (locales == undefined) {
+    throw new Error(
+      'Uh, did you forget to configure locales in your Next.js config?'
+    )
+  }
   const plantEntriesToGenerate = await getPlantList({ limit: 10 })
-  const paths: PathType[] = plantEntriesToGenerate.map(({ slug }) => ({
-    params: {
-      slug,
-    },
-  }))
+  const paths: PathType[] = flatMap(
+    plantEntriesToGenerate.map(({ slug }) => ({
+      params: {
+        slug,
+      },
+    })),
+    (path) => locales.map((loc) => ({ locale: loc, ...path }))
+  )
 
   return {
     paths,
