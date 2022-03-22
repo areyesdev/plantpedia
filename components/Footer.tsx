@@ -35,19 +35,19 @@ export const Footer = ({ className }: { className?: string }) => {
                 <a href="/getting-started">{t('gettingStarted')}</a>
               </li>
               <li className="pb-1">
-                <a href="/search">Search</a>
+                <a href="/search">{t('search')}</a>
               </li>
               <li className="pb-1">
-                <a href="/top-stories">Top stories</a>
+                <a href="/top-stories">{t('topStories')}</a>
               </li>
             </ul>
           </Grid>
           <Grid item xs={6} sm={3}>
             <Typography variant="h5" className="mb-4">
-              About
+              {t('about')}
             </Typography>
             <p>
-              <a href="https://platzi.com/">Platzi's Next.js Course by</a>{' '}
+              <a href="https://platzi.com/">{t('aboutDescription')}</a>{' '}
               <a href="https://twitter.com/jonalvarezz">@jonalvarezz</a>
             </p>
             <div className="mt-3">
